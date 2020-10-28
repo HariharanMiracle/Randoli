@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS event;
+
+CREATE TABLE event (
+  eventId VARCHAR(50) NOT NULL PRIMARY KEY,
+  transId VARCHAR(50) NOT NULL,
+  transTms VARCHAR(30) NOT NULL,
+  rcNum VARCHAR(10) NOT NULL,
+  clientId VARCHAR(10) NOT NULL,
+  eventCnt VARCHAR(10) NOT NULL,
+  locationCd VARCHAR(30) NOT NULL,
+  locationId1 VARCHAR(20),
+  locationId2 VARCHAR(20),
+  addrNbr VARCHAR(10) NOT NULL
+);
