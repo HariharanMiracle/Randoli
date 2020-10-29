@@ -1,0 +1,3 @@
+I have removed docker, since I have a hard disk size of 128 GB and it is fully filled with my research work I had to remove docker.
+I could not find another laptop due to this panedemic situation. So I could not complete the last part of the assignment.
+I have added a sample work which was done with docker and AWS ECS service as a reference to the last bonus part.

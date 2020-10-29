@@ -1,5 +1,6 @@
 package com.randoli.src.app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.camel.ProducerTemplate;
@@ -20,27 +21,66 @@ public class EventController {
 
 	@RequestMapping(value = "/event", consumes = "application/json", method = RequestMethod.POST)
 	public boolean insertEvent(@RequestBody Event event) {
-		event.generateEventId();
-		producerTemplate.requestBody("direct:insert", event, List.class);
-		return true;
+		try {
+			event.generateEventId();
+			producerTemplate.requestBody("direct:insert", event, List.class);
+			return true;			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@RequestMapping(value = "/event", method = RequestMethod.GET)
 	public List<Event> getAllEvents() {
-		List<Event> events = producerTemplate.requestBody("direct:select", null, List.class);
-		return events;
+		try {
+			List<Event> events = producerTemplate.requestBody("direct:select", null, List.class);
+			return events;			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return new ArrayList<Event>();
+		}
 	}
 
 	
 	@RequestMapping(value = "/event", consumes = "application/json", method = RequestMethod.PUT)
 	public boolean updateEvent(@RequestBody Event event) {
-		producerTemplate.requestBody("direct:update", event, List.class);
-		return true;
+		try {
+			producerTemplate.requestBody("direct:update", event, List.class);
+			return true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	@RequestMapping(value = "/event/{eventId}", method = RequestMethod.DELETE)
 	public boolean updateEvent(@PathVariable String eventId) {
-		producerTemplate.requestBody("direct:delete", eventId, List.class);
-		return true;
+		try {
+			producerTemplate.requestBody("direct:delete", eventId, List.class);
+			return true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@RequestMapping(value = "/events", consumes = "application/json", method = RequestMethod.POST)
+	public boolean insertAllEvent(@RequestBody List<Event> eventList) {
+		try {
+			for(Event event : eventList) {
+				event.generateEventId();
+				producerTemplate.requestBody("direct:insert", event, List.class);
+			}
+			return true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }
